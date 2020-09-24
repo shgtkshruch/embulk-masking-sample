@@ -37,8 +37,18 @@ embulk run config.yml
 ```
 
 ## Docker
+- [Docker Compose](https://docs.docker.com/compose/)
+- [dip](https://github.com/bibendi/dip)
+- [GitHub CLI](https://cli.github.com/)
 
 ```sh
+# Download test data
+# ref: https://dev.mysql.com/doc/employee/en/
+gh repo clone datacharmer/test_db
+
 # Lunch MySQL server on 4306 port
 dip provition
+
+# Import test data to MySQL
+docker-compose exec db /bin/bash -c 'cd /tmp/test_db && mysql -u root -p"$MYSQL_ROOT_PASSWORD" < employees.sql'
 ```

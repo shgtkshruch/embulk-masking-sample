@@ -1,6 +1,14 @@
 # Required minimum dip version
 version: '4.1'
 
+interaction:
+  mysql:
+    description: Run MySQL commands
+    service: db
+    command: mysql
+    compose:
+      run_options: [no-deps]
+
 provision:
   - dip compose down
   - dip compose up -d

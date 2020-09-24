@@ -3,9 +3,10 @@ version: "3.8"
 services:
   db:
     image: mysql
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
     ports:
       - 4306:3306
+    volumes:
+      - ./test_db:/tmp/test_db
