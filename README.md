@@ -52,3 +52,21 @@ dip provition
 # Import test data to MySQL
 docker-compose exec db /bin/bash -c 'cd /tmp/test_db && mysql -u root -p"$MYSQL_ROOT_PASSWORD" < employees.sql'
 ```
+
+## MySQL
+
+```sh
+embulk gem install embulk-input-mysql
+embulk guess ./mysql/seed.yml -o ./mysql/config.yml
+embulk preview ./mysql/config.yml
++-------------+-------------------------+-------------------+------------------+---------------+-------------------------+
+| emp_no:long |    birth_date:timestamp | first_name:string | last_name:string | gender:string |     hire_date:timestamp |
++-------------+-------------------------+-------------------+------------------+---------------+-------------------------+
+|      10,001 | 1953-09-01 15:00:00 UTC |            Georgi |          Facello |             M | 1986-06-25 15:00:00 UTC |
+|      10,002 | 1964-06-01 15:00:00 UTC |           Bezalel |           Simmel |             F | 1985-11-20 15:00:00 UTC |
+|      10,003 | 1959-12-02 15:00:00 UTC |             Parto |          Bamford |             M | 1986-08-27 15:00:00 UTC |
+|      10,004 | 1954-04-30 15:00:00 UTC |         Chirstian |          Koblick |             M | 1986-11-30 15:00:00 UTC |
+|      10,005 | 1955-01-20 15:00:00 UTC |           Kyoichi |         Maliniak |             M | 1989-09-11 15:00:00 UTC |
+...
+...
+```
