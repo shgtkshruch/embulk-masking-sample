@@ -1,0 +1,6 @@
+# Required minimum dip version
+version: '4.1'
+
+provision:
+  - dip compose down
+  - dip compose up -d

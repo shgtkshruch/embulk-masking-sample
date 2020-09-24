@@ -35,3 +35,10 @@ embulk run config.yml
 3,27559,2015-01-28 02:20:02,20150128,Embulk "csv" parser plugin
 4,11270,2015-01-29 11:54:36,20150129,
 ```
+
+## Docker
+
+```sh
+# Lunch MySQL server on 4306 port
+dip provition
+```
