@@ -1,0 +1,5 @@
+in:
+  type: file
+  path_prefix: '/Users/shgtshruch/dev/ghq/github.com/shgtkshruch/embulk-masking-sample/./try1/csv/sample_'
+out:
+  type: stdout
