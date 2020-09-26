@@ -9,6 +9,7 @@ services:
     tty: true
     working_dir: /tmp/embulk/
     volumes:
+      - bundle:/tmp/embulk/vender
       - ./bundle:/tmp/embulk/bundle
       - ./mysql:/tmp/embulk/mysql
     depends_on:
@@ -24,3 +25,6 @@ services:
       - 4306:3306
     volumes:
       - ./test_db:/tmp/test_db
+
+volumes:
+  bundle:
