@@ -102,3 +102,10 @@ $ dip terraform apply
 # Remove aws recouces
 $ dip terraform destroy
 ```
+
+### Load `test_data` to RDS
+
+
+```sh
+docker-compose exec db /bin/bash -c 'mysql -h HOST -u USER -pPASSWORD < employees.sql'
+```
