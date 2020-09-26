@@ -1,11 +1,32 @@
 in:
   type: mysql
-  host: "127.0.0.1"
+  host: 127.0.0.1
   port: 4306
   user: root
   password: example
   database: employees
   table: employees
-  order_by: "emp_no ASC"
+  order_by: emp_no ASC
+
+filters:
+  - type: ruby_proc
+    before:
+      - proc: |
+          -> do
+            @started_at = Time.now
+            puts "before proc"
+          end
+    after:
+      - proc: |
+          -> do
+            puts "after proc"
+            p Time.now - @started_at
+          end
+    columns:
+      - name: first_name
+        proc: |
+          ->(first_name) do
+            first_name.reverse
+          end
 out:
   type: stdout
