@@ -1,4 +1,4 @@
-in: {type: mysql, host: 127.0.0.1, port: 4306, user: root, password: example, database: employees,
+in: {type: mysql, host: db, port: 3306, user: root, password: example, database: employees,
   table: employees, order_by: emp_no ASC}
 filters:
 - type: ruby_proc

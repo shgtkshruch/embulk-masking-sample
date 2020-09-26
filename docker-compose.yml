@@ -1,12 +1,25 @@
 version: "3.8"
 
 services:
+  embulk:
+    build:
+      context: .
+      args:
+        EMBULK_VERSION: 0.9.23
+    tty: true
+    working_dir: /tmp/embulk/
+    volumes:
+      - ./bundle:/tmp/embulk/bundle
+      - ./mysql:/tmp/embulk/mysql
+    depends_on:
+      - db
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
+    working_dir: /tmp/test_db
     ports:
       - 4306:3306
     volumes:

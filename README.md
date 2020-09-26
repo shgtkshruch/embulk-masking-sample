@@ -1,14 +1,24 @@
 # embulk-masking-sample
 
 ## Install
+- [Docker Compose](https://docs.docker.com/compose/)
+- [dip](https://github.com/bibendi/dip)
+- [GitHub CLI](https://cli.github.com/)
 
 ```sh
-# embulk: Java 1.8 is required to install this formula.
-# Install AdoptOpenJDK 8 with Homebrew Cask:
-brew cask install homebrew/cask-versions/adoptopenjdk8
+# Download test data
+# ref: https://dev.mysql.com/doc/employee/en/
+$ gh repo clone datacharmer/test_db
 
-# Install embulk
-brew install embulk
+# Lunch MySQL server on 4306 port
+$ dip provition
+
+# Import test data to MySQL
+$ docker-compose exec db /bin/bash -c 'mysql -u root -p"$MYSQL_ROOT_PASSWORD" < employees.sql'
+
+# bundle install
+$ docker-compose exec -w /tmp/embulk/bundle embulk bash
+$ embulk bundle install
 ```
 
 ## Example
@@ -16,10 +26,10 @@ brew install embulk
 [Official example](https://www.embulk.org/)
 
 ```sh
-embulk example ./try1
-embulk guess ./try1/seed.yml -o ./try1/config.yml
+$ embulk example ./try1
+$ embulk guess ./try1/seed.yml -o ./try1/config.yml
 
-embulk preview ./try1/config.yml
+$ embulk preview ./try1/config.yml
 +---------+--------------+-------------------------+-------------------------+----------------------------+
 | id:long | account:long |          time:timestamp |      purchase:timestamp |             comment:string |
 +---------+--------------+-------------------------+-------------------------+----------------------------+
@@ -29,37 +39,19 @@ embulk preview ./try1/config.yml
 |       4 |       11,270 | 2015-01-29 11:54:36 UTC | 2015-01-29 00:00:00 UTC |                            |
 +---------+--------------+-------------------------+-------------------------+----------------------------+
 
-embulk run ./try1/config.yml
+$ embulk run ./try1/config.yml
 1,32864,2015-01-27 19:23:49,20150127,embulk
 2,14824,2015-01-27 19:01:23,20150127,embulk jruby
 3,27559,2015-01-28 02:20:02,20150128,Embulk "csv" parser plugin
 4,11270,2015-01-29 11:54:36,20150129,
 ```
 
-## Docker
-- [Docker Compose](https://docs.docker.com/compose/)
-- [dip](https://github.com/bibendi/dip)
-- [GitHub CLI](https://cli.github.com/)
-
-```sh
-# Download test data
-# ref: https://dev.mysql.com/doc/employee/en/
-gh repo clone datacharmer/test_db
-
-# Lunch MySQL server on 4306 port
-dip provition
-
-# Import test data to MySQL
-docker-compose exec db /bin/bash -c 'cd /tmp/test_db && mysql -u root -p"$MYSQL_ROOT_PASSWORD" < employees.sql'
-```
-
 ## MySQL
 
 ```sh
-cd bundle
-embulk bundle install
-embulk guess -b bundle -o ./mysql/config.yml ./mysql/seed.yml
-embulk preview -b bundle ./mysql/config.yml
+$ docker-compose exec embulk bash
+$ embulk guess -b bundle -o ./mysql/config.yml ./mysql/seed.yml
+$ embulk preview -b bundle ./mysql/config.yml
 +-------------+-------------------------+-------------------+------------------+---------------+-------------------------+
 | emp_no:long |    birth_date:timestamp | first_name:string | last_name:string | gender:string |     hire_date:timestamp |
 +-------------+-------------------------+-------------------+------------------+---------------+-------------------------+
@@ -70,5 +62,6 @@ embulk preview -b bundle ./mysql/config.yml
 |      10,005 | 1955-01-20 15:00:00 UTC |           Kyoichi |         Maliniak |             M | 1989-09-11 15:00:00 UTC |
 ...
 ...
-embulk run -b bundle ./mysql/config.yml
+
+$ embulk run -b bundle ./mysql/config.yml
 ```
