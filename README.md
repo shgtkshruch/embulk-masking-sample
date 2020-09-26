@@ -56,9 +56,10 @@ docker-compose exec db /bin/bash -c 'cd /tmp/test_db && mysql -u root -p"$MYSQL_
 ## MySQL
 
 ```sh
-embulk gem install embulk-input-mysql
-embulk guess ./mysql/seed.yml -o ./mysql/config.yml
-embulk preview ./mysql/config.yml
+cd bundle
+embulk bundle install
+embulk guess -b bundle -o ./mysql/config.yml ./mysql/seed.yml
+embulk preview -b bundle ./mysql/config.yml
 +-------------+-------------------------+-------------------+------------------+---------------+-------------------------+
 | emp_no:long |    birth_date:timestamp | first_name:string | last_name:string | gender:string |     hire_date:timestamp |
 +-------------+-------------------------+-------------------+------------------+---------------+-------------------------+
