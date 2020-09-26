@@ -17,6 +17,7 @@ gem 'embulk'
 #gem 'embulk-output-awesome', git: 'https://github.com/you/embulk-output-awesome.git', branch: 'master'
 #
 gem 'embulk-input-mysql'
+gem 'embulk-filter-ruby_proc'
 
 #
 # 2. When you modify this file, run following command to
