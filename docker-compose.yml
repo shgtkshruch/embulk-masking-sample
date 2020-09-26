@@ -27,6 +27,9 @@ services:
       - mysql:/var/lib/mysql
       - ./test_db:/tmp/test_db
 
+  terraform:
+    image: hashicorp/terraform:light
+
 volumes:
   bundle:
   mysql:

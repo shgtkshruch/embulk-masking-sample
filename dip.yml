@@ -15,6 +15,9 @@ interaction:
     compose:
       run_options: [no-deps]
 
+  terraform:
+    service: terraform
+
 provision:
   - dip compose down
   - dip compose up -d
