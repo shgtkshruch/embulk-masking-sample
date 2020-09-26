@@ -14,6 +14,7 @@ services:
       - ./mysql:/tmp/embulk/mysql
     depends_on:
       - db
+
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
@@ -29,6 +30,11 @@ services:
 
   terraform:
     image: hashicorp/terraform:light
+    volumes:
+      - ./terraform:/terraform
+    working_dir: /terraform
+    env_file:
+      - .env-tf
 
   aws:
     image: amazon/aws-cli

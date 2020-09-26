@@ -82,3 +82,23 @@ AWS_DEFAULT_REGION=xxx
 $ dip aws iam create-user --user-name embulk-mysql-rds-masking
 $ dip aws iam create-access-key --user-name embulk-mysql-rds-masking
 $ dip aws iam attach-user-policy --policy-arn arn:aws:iam::aws:policy/AdministratorAccess --user-name embulk-mysql-rds-masking
+```
+
+### Terraform
+
+create `.env-tf` file.
+
+```
+AWS_ACCESS_KEY_ID=xxx
+AWS_SECRET_ACCESS_KEY=xxx
+AWS_DEFAULT_REGION=xxx
+```
+
+```sh
+$ dip terraform init
+$ dip terraform plan
+$ dip terraform apply
+
+# Remove aws recouces
+$ dip terraform destroy
+```

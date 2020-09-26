@@ -1,4 +1,6 @@
+.env*
 test_db
 vender
 bundle/jruby/
-.env*
+terraform/.terraform*
+terraform/terraform.tfstate*
