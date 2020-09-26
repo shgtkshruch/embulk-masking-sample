@@ -24,7 +24,9 @@ services:
     ports:
       - 4306:3306
     volumes:
+      - mysql:/var/lib/mysql
       - ./test_db:/tmp/test_db
 
 volumes:
   bundle:
+  mysql:
