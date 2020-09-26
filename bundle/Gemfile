@@ -18,6 +18,7 @@ gem 'embulk'
 #
 gem 'embulk-input-mysql'
 gem 'embulk-filter-ruby_proc'
+gem 'gimei'
 
 #
 # 2. When you modify this file, run following command to

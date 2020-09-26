@@ -2,6 +2,7 @@ in: {type: mysql, host: 127.0.0.1, port: 4306, user: root, password: example, da
   table: employees, order_by: emp_no ASC}
 filters:
 - type: ruby_proc
+  requires: [gimei]
   before:
   - proc: |
       -> do
@@ -14,10 +15,22 @@ filters:
         puts "after proc"
         p Time.now - @started_at
       end
+  rows:
+  - proc: |
+      ->(record) do
+        gender = { M: :male, F: :female }
+        @gimei = Gimei.__send__(gender[record["gender"].to_sym])
+        record
+      end
   columns:
   - name: first_name
     proc: |
       ->(first_name) do
-        first_name.reverse
+        @gimei.first.kanji
+      end
+  - name: last_name
+    proc: |
+      ->(last_name) do
+        @gimei.last.kanji
       end
 out: {type: stdout}

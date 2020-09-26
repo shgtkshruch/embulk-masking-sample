@@ -10,6 +10,8 @@ in:
 
 filters:
   - type: ruby_proc
+    requires:
+      - gimei
     before:
       - proc: |
           -> do
@@ -22,11 +24,23 @@ filters:
             puts "after proc"
             p Time.now - @started_at
           end
+    rows:
+      - proc: |
+          ->(record) do
+            gender = { M: :male, F: :female }
+            @gimei = Gimei.__send__(gender[record["gender"].to_sym])
+            record
+          end
     columns:
       - name: first_name
         proc: |
           ->(first_name) do
-            first_name.reverse
+            @gimei.first.kanji
+          end
+      - name: last_name
+        proc: |
+          ->(last_name) do
+            @gimei.last.kanji
           end
 out:
   type: stdout
