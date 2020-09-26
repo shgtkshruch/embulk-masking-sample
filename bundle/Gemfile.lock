@@ -7,6 +7,7 @@ GEM
       msgpack (~> 1.1.0)
     embulk-filter-ruby_proc (0.8.1)
     embulk-input-mysql (0.11.1-java)
+    embulk-output-mysql (0.9.0-java)
     gimei (0.5.1)
       romaji
     liquid (4.0.3)
@@ -22,6 +23,7 @@ DEPENDENCIES
   embulk
   embulk-filter-ruby_proc
   embulk-input-mysql
+  embulk-output-mysql
   gimei
 
 BUNDLED WITH

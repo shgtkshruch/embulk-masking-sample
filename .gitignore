@@ -4,3 +4,4 @@ vender
 bundle/jruby/
 terraform/.terraform*
 terraform/terraform.tfstate*
+.DS_Store

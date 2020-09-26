@@ -1,12 +1,10 @@
 in:
   type: mysql
-  host: db
-  port: 3306
-  user: root
-  password: example
+  host: terraform-20200926125353878200000001.caz8jviirpne.ap-northeast-1.rds.amazonaws.com
+  user: dbuser
+  password: password
   database: employees
   table: employees
-  order_by: emp_no ASC
 
 filters:
   - type: ruby_proc
@@ -42,5 +40,14 @@ filters:
           ->(last_name) do
             @gimei.last.kanji
           end
+
 out:
-  type: stdout
+  type: mysql
+  host: db
+  user: root
+  password: example
+  database: employees
+  table: employees
+  mode: truncate_insert
+  column_options:
+    gender: { type: 'varchar(2)' } # enum は未対応
