@@ -65,3 +65,20 @@ $ embulk preview -b bundle ./mysql/config.yml
 
 $ embulk run -b bundle ./mysql/config.yml
 ```
+
+## AWS
+
+### Create IAM user for Terraform
+
+create `.env-aws` file.
+
+```
+AWS_ACCESS_KEY_ID=xxx
+AWS_SECRET_ACCESS_KEY=xxx
+AWS_DEFAULT_REGION=xxx
+```
+
+```sh
+$ dip aws iam create-user --user-name embulk-mysql-rds-masking
+$ dip aws iam create-access-key --user-name embulk-mysql-rds-masking
+$ dip aws iam attach-user-policy --policy-arn arn:aws:iam::aws:policy/AdministratorAccess --user-name embulk-mysql-rds-masking

@@ -18,6 +18,9 @@ interaction:
   terraform:
     service: terraform
 
+  aws:
+    service: aws
+
 provision:
   - dip compose down
   - dip compose up -d

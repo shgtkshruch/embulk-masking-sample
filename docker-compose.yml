@@ -30,6 +30,11 @@ services:
   terraform:
     image: hashicorp/terraform:light
 
+  aws:
+    image: amazon/aws-cli
+    env_file:
+      - .env-aws
+
 volumes:
   bundle:
   mysql:
