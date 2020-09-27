@@ -16,7 +16,7 @@ $ dip provition
 # Import test data to MySQL
 $ docker-compose exec db /bin/bash -c 'mysql -u root -p"$MYSQL_ROOT_PASSWORD" < employees.sql'
 
-# bundle install
+# Install embulk gems
 $ docker-compose exec -w /tmp/embulk/bundle embulk bash
 $ embulk bundle install
 ```
@@ -86,7 +86,7 @@ $ dip aws iam attach-user-policy --policy-arn arn:aws:iam::aws:policy/Administra
 
 ### Terraform
 
-create `.env-tf` file.
+create `.env-tf` file with `embulk-mysql-rds-masking` credential.
 
 ```
 AWS_ACCESS_KEY_ID=xxx
@@ -99,7 +99,7 @@ $ dip terraform init
 $ dip terraform plan
 $ dip terraform apply
 
-# Remove aws recouces
+# Remove aws resources
 $ dip terraform destroy
 ```
 
