@@ -81,7 +81,9 @@ AWS_DEFAULT_REGION=xxx
 ```sh
 $ dip aws iam create-user --user-name embulk-mysql-rds-masking
 $ dip aws iam create-access-key --user-name embulk-mysql-rds-masking
-$ dip aws iam attach-user-policy --policy-arn arn:aws:iam::aws:policy/AdministratorAccess --user-name embulk-mysql-rds-masking
+$ dip aws iam attach-user-policy \
+  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess \
+  --user-name embulk-mysql-rds-masking
 ```
 
 ### Terraform
@@ -98,14 +100,41 @@ AWS_DEFAULT_REGION=xxx
 $ dip terraform init
 $ dip terraform plan
 $ dip terraform apply
-
-# Remove aws resources
-$ dip terraform destroy
 ```
 
 ### Load `test_data` to RDS
 
+```sh
+$ docker-compose exec db /bin/bash -c 'mysql -h HOST -u dbuser -ppassword < employees.sql'
+```
+
+### Create snapshot
 
 ```sh
-docker-compose exec db /bin/bash -c 'mysql -h HOST -u USER -pPASSWORD < employees.sql'
+$ dip aws rds create-db-snapshot \
+  --db-snapshot-identifier embulk-mysql-rds-masking \
+  --db-instance-identifier RDS_ID
+```
+
+### Transfer data from RDS to local MySQL
+
+1. Set db `host` to `mysql/seed.yml`
+2. Run embulk
+
+```sh
+$ docker-compose exec embulk bash
+$ embulk guess -b bundle -o ./mysql/config.yml ./mysql/seed.yml
+$ embulk preview -b bundle ./mysql/config.yml
+$ embulk run -b bundle ./mysql/config.yml
+```
+
+### Cleaning
+
+```sh
+# Remove RDS snapshot
+$ dip aws rds delete-db-snapshot \
+  --db-snapshot-identifier embulk-mysql-rds-masking
+
+# Remove other aws resources
+$ dip terraform destroy
 ```
