@@ -125,7 +125,7 @@ $ dip aws lambda invoke \
 $ dip aws lambda invoke \
   --function-name delete_onetime_rds \
   --cli-binary-format raw-in-base64-out \
-  --payload '{ "DBSnapshotIdentifier": "embulk-mysql-rds-masking",  "DBInstanceIdentifier": "embulk-mysql-rds-masking" }' \
+  --payload '{ "Identifier": "embulk-mysql-rds-masking" }' \
   out --log-type Tail
 ```
 
