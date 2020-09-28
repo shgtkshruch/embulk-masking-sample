@@ -26,7 +26,7 @@ resource "aws_lambda_function" "create_onetime_rds" {
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = "create-onetime-rds.handler"
   runtime          = "nodejs12.x"
-  timeout          = 600
+  timeout          = 900
   source_code_hash = filebase64sha256("lambda/create-onetime-rds.zip")
 
   depends_on = [
@@ -45,7 +45,7 @@ resource "aws_lambda_function" "delete_onetime_rds" {
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = "delete-onetime-rds.handler"
   runtime          = "nodejs12.x"
-  timeout          = 600
+  timeout          = 900
   source_code_hash = filebase64sha256("lambda/delete-onetime-rds.zip")
 
   depends_on = [
