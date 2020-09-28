@@ -17,8 +17,8 @@ resource "aws_db_parameter_group" "mysql8" {
 }
 
 resource "aws_security_group" "default" {
-  name = "rds_sg"
-  vpc_id      = aws_vpc.main.id
+  name   = "rds_sg"
+  vpc_id = aws_vpc.main.id
 
   ingress {
     description = "MySQL"
@@ -51,11 +51,11 @@ resource "aws_db_instance" "db" {
   password             = "password"
   parameter_group_name = aws_db_parameter_group.mysql8.name
 
-  publicly_accessible = true
+  publicly_accessible    = true
   vpc_security_group_ids = [aws_security_group.default.id]
-  db_subnet_group_name = aws_db_subnet_group.default.name
+  db_subnet_group_name   = aws_db_subnet_group.default.name
 
-  skip_final_snapshot  = true
+  skip_final_snapshot = true
 
   tags = {
     Name = var.project_name

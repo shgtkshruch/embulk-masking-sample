@@ -108,12 +108,29 @@ $ dip terraform apply
 $ docker-compose exec db /bin/bash -c 'mysql -h HOST -u dbuser -ppassword < employees.sql'
 ```
 
-### Create snapshot
+## Data transfer
+
+### Create RDS from snapshot
 
 ```sh
-$ dip aws rds create-db-snapshot \
-  --db-snapshot-identifier embulk-mysql-rds-masking \
-  --db-instance-identifier RDS_ID
+$ cd terraform/lambda && zip -r create-onetime-rds.zip create-onetime-rds.js && cd -
+$ cd terraform/lambda && zip -r delete-onetime-rds.zip delete-onetime-rds.js && cd -
+
+$ dip aws lambda invoke \
+  --function-name create_onetime_rds \
+  --cli-binary-format raw-in-base64-out \
+  --payload '{ "DBInstanceIdentifier": "terraform-20200928095153696900000001" }' \
+  out --log-type Tail
+
+$ dip aws lambda invoke \
+  --function-name delete_onetime_rds \
+  --cli-binary-format raw-in-base64-out \
+  --payload '{ "DBSnapshotIdentifier": "embulk-mysql-rds-masking",  "DBInstanceIdentifier": "embulk-mysql-rds-masking" }' \
+  out --log-type Tail
+```
+
+```sh
+$ dip aws stepfunctions start-execution --state-machine-arn <value>
 ```
 
 ### Transfer data from RDS to local MySQL
@@ -128,13 +145,10 @@ $ embulk preview -b bundle ./mysql/config.yml
 $ embulk run -b bundle ./mysql/config.yml
 ```
 
-### Cleaning
+## Cleaning
+
+Remove aws resources.
 
 ```sh
-# Remove RDS snapshot
-$ dip aws rds delete-db-snapshot \
-  --db-snapshot-identifier embulk-mysql-rds-masking
-
-# Remove other aws resources
 $ dip terraform destroy
 ```
