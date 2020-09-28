@@ -1,4 +1,4 @@
 variable "project_name" {
-  description = "プロジェクト名"
+  description = "project name"
   default     = "embulk-mysql-rds-masking"
 }
