@@ -92,12 +92,8 @@ resource "aws_iam_policy" "lambda_logging" {
         "rds:DeleteDBInstance"
       ],
       "Resource": [
-        "arn:aws:rds:*:${data.aws_caller_identity.current.account_id}:secgrp:*",
-        "arn:aws:rds:*:${data.aws_caller_identity.current.account_id}:subgrp:*",
-        "arn:aws:rds:*:${data.aws_caller_identity.current.account_id}:pg:*",
         "arn:aws:rds:*:${data.aws_caller_identity.current.account_id}:snapshot:*",
-        "arn:aws:rds:*:${data.aws_caller_identity.current.account_id}:db:*",
-        "arn:aws:rds:*:${data.aws_caller_identity.current.account_id}:og:*"
+        "arn:aws:rds:*:${data.aws_caller_identity.current.account_id}:db:*"
       ]
     }
   ]
