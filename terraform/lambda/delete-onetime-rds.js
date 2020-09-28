@@ -17,7 +17,7 @@ exports.handler = async function(event, context) {
 
   console.log('wait untile rds deleted')
   await rds.waitFor('dBInstanceDeleted', {
-    DBInstanceIdentifier: instance.DBInstanceIdentifier
+    DBInstanceIdentifier: Identifier
   }).promise()
   console.log('deleted db instance')
 

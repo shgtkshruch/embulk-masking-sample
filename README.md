@@ -97,6 +97,9 @@ AWS_DEFAULT_REGION=xxx
 ```
 
 ```sh
+# generage zip files of lambda
+$ cd terraform/lambda && zip -r create-onetime-rds.zip create-onetime-rds.js && zip -r delete-onetime-rds.zip delete-onetime-rds.js && cd -
+
 $ dip terraform init
 $ dip terraform plan
 $ dip terraform apply
@@ -108,29 +111,12 @@ $ dip terraform apply
 $ docker-compose exec db /bin/bash -c 'mysql -h HOST -u dbuser -ppassword < employees.sql'
 ```
 
-## Data transfer
-
-### Create RDS from snapshot
+### Create onetime RDS
 
 ```sh
-$ cd terraform/lambda && zip -r create-onetime-rds.zip create-onetime-rds.js && cd -
-$ cd terraform/lambda && zip -r delete-onetime-rds.zip delete-onetime-rds.js && cd -
-
-$ dip aws lambda invoke \
-  --function-name create_onetime_rds \
-  --cli-binary-format raw-in-base64-out \
-  --payload '{ "DBInstanceIdentifier": "terraform-20200928095153696900000001" }' \
-  out --log-type Tail
-
-$ dip aws lambda invoke \
-  --function-name delete_onetime_rds \
-  --cli-binary-format raw-in-base64-out \
-  --payload '{ "Identifier": "embulk-mysql-rds-masking" }' \
-  out --log-type Tail
-```
-
-```sh
-$ dip aws stepfunctions start-execution --state-machine-arn <value>
+$ dip aws stepfunctions start-execution \
+  --state-machine-arn <value> \
+  --input '{ "DBInstanceIdentifier": "RDS_IDENTIFIER" }'
 ```
 
 ### Transfer data from RDS to local MySQL
