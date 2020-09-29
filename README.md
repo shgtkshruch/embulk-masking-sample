@@ -1,9 +1,18 @@
-# embulk-masking-sample
+study for loading concealed data with [Embulk](https://www.embulk.org/).
 
-## Install
+## Diagram
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/5207601/94560318-6f93a480-029d-11eb-8c80-c6f4f226733a.png">
+</p>
+
+## Requirements
+
 - [Docker Compose](https://docs.docker.com/compose/)
 - [dip](https://github.com/bibendi/dip)
 - [GitHub CLI](https://cli.github.com/)
+
+## Setup
 
 ```sh
 # Download test data
